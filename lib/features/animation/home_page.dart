@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,57 +11,12 @@ class HomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late TweenSequence<Alignment> alignTween;
-  late Tween<double> rotateTween;
-  final curve = Curves.linear;
-  late Animation<Alignment> alignAnimation;
-  late Animation<double> rotateAnimation;
+  double rotationFactor = 0.0;
+
+  final controller = ScrollController();
 
   @override
   void initState() {
-    controller = AnimationController(
-      duration: const Duration(seconds: 4),
-      vsync: this,
-    );
-    alignTween = TweenSequence<Alignment>([
-      TweenSequenceItem(
-          tween: Tween(begin: Alignment.topLeft, end: Alignment.topRight),
-          weight: 1 // <<< この例ではDurationが4秒なので、weight:1 = 1秒となる
-          ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.topRight, end: Alignment.bottomRight),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.bottomLeft, end: Alignment.topLeft),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.topLeft, end: Alignment.center),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.center, end: Alignment.bottomRight),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.bottomRight, end: Alignment.bottomLeft),
-        weight: 1,
-      ),
-      TweenSequenceItem(
-        tween: Tween(begin: Alignment.bottomLeft, end: Alignment.topLeft),
-        weight: 1,
-      ),
-    ]);
-    rotateTween = Tween(begin: 0, end: 8 * pi);
-    alignTween.chain(CurveTween(curve: curve));
-    alignAnimation = controller.drive(alignTween);
-    rotateAnimation = controller.drive(rotateTween);
     super.initState();
   }
 
@@ -73,38 +26,81 @@ class _MyHomePageState extends State<HomePage>
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Expanded(
-            child: AnimatedBuilder(
-                animation: alignAnimation,
-                builder: (context, _) {
-                  return Align(
-                    alignment: alignAnimation.value,
-                    child: Transform.rotate(
-                      angle: rotateAnimation.value,
-                      child: const Text('Hello world!'),
+          Transform.rotate(
+            angle: rotationFactor,
+            child: const Icon(
+              Icons.settings,
+              size: 50,
+            ),
+          ),
+          Positioned(
+            top: 27,
+            left: 27,
+            child: Transform.rotate(
+              angle: -rotationFactor,
+              child: const Icon(
+                Icons.settings,
+                size: 50,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 80),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 9,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey, //色
+                          spreadRadius: 5,
+                          blurRadius: 5,
+                          offset: Offset(1, 1),
+                        ),
+                      ],
+                      color: Colors.white,
                     ),
-                  );
-                }),
-          ),
-          AnimatingText(
-            animation: alignAnimation,
-          ),
-          AnimatingText(
-            animation: alignAnimation,
-          ),
-          AnimatingText(
-            animation: alignAnimation,
-          ),
-          AnimatingText(
-            animation: alignAnimation,
+                    child: NotificationListener<ScrollNotification>(
+                      onNotification: (scrollNotification) {
+                        if (scrollNotification is ScrollUpdateNotification) {
+                          setState(() {
+                            rotationFactor +=
+                                scrollNotification.scrollDelta! / 100;
+                          });
+                        }
+                        return true;
+                      },
+                      child: ListView.builder(
+                        controller: controller,
+                        itemCount: 200,
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            height: 100,
+                            child:
+                                Center(child: Text('List Item ${index + 1}')),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          controller.repeat();
+          // controller.jumpTo(0);
+          controller.animateTo(
+            0,
+            duration: const Duration(seconds: 1),
+            curve: Curves.bounceIn,
+          );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
