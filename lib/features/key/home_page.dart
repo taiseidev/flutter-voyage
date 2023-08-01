@@ -9,6 +9,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
+  final _customTextFormFieldState = GlobalKey<_CustomTextFormFieldState>();
 
   int formCount = 1;
 
@@ -37,6 +38,7 @@ class _HomePageState extends State<HomePage> {
                       (index) => Column(
                         children: [
                           CustomTextFormField(
+                            key: _customTextFormFieldState,
                             validator: (String? value) {
                               return null;
                             },

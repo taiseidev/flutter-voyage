@@ -90,3 +90,18 @@ String describe(AuthException exception) {
     UserNotFoundException() => 'User not found',
   };
 }
+
+abstract class SuperClass {
+  SuperClass(this.a);
+  final String a;
+  void test();
+}
+
+class SubClass extends SuperClass {
+  SubClass(this.b) : super(b);
+  final String b;
+  @override
+  void test() {
+    print('SubClass: $b');
+  }
+}
