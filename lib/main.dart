@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_voyage/features/screenTransitionInModal/home_page.dart';
+import 'package:flutter_voyage/features/chart/home_page.dart';
 
 void main() {
   runApp(const MyApp());
