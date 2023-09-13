@@ -6,8 +6,50 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: FlexibleSample(),
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: size.width * 0.6,
+              child: AspectRatio(
+                aspectRatio: size.width / size.height,
+                child: Container(
+                  color: Colors.amber,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: FractionallySizedBox(
+                      widthFactor: 0.5,
+                      heightFactor: 0.5,
+                      child: ColoredBox(
+                        color: Colors.black,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                color: Colors.red,
+                                child: const Text("テストテストテストテスト"),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                color: Colors.blue,
+                                child: const Text("テストテストテストテスト"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
