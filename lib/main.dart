@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_voyage/features/yumemi/home_page.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_voyage/features/api/post/presentation/pages/post_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        home: const HomePage());
+        home: const PostPage());
   }
 }
 
