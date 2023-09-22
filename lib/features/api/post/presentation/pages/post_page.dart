@@ -44,6 +44,7 @@ class _ListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final post = ref.watch(_currentPostProvider);
+
     return Card(
       child: ListTile(
         onTap: () => Navigator.push(

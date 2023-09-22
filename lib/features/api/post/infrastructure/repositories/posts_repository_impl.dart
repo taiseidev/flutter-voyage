@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_voyage/features/api/post/domain/entities/post.dart';
 import 'package:flutter_voyage/features/api/post/domain/repositories/i_posts_repository.dart';
 import 'package:flutter_voyage/features/api/post/infrastructure/client/posts_api_client.dart';
@@ -19,7 +20,9 @@ class PostsRepositoryImpl extends IPostRepository {
     late final List<Post> posts;
     try {
       posts = await _apiClient.getPosts();
-    } catch (e) {}
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
     return posts;
   }
 
