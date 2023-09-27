@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_voyage/features/supabase/splash_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'features/supabase/register_page.dart';
 
 void main() async {
   await Supabase.initialize(
@@ -24,6 +23,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        home: const RegisterPage());
+        home: const SplashPage());
   }
 }
