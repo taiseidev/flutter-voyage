@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_voyage/features/hooks/use_memoized_sample.dart';
-import 'package:flutter_voyage/features/loading/loading_sample.dart';
+import 'package:flutter_voyage/features/sample/home_page.dart';
 
 void main() async {
   // await Supabase.initialize(
@@ -8,7 +7,7 @@ void main() async {
   //   anonKey:
   //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5amxjeGhna3pjc3BkeGJ3aXR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTU4MjE4NTEsImV4cCI6MjAxMTM5Nzg1MX0.cUB5k-PwkqNTgwjF9x-KNVV3b7G_5Gx11T8LUkMmZvU',
   // );
-  runApp(UseMemoizedSample());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,6 +22,12 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           useMaterial3: true,
         ),
-        home: const LoadingSample());
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+            child: child!,
+          );
+        },
+        home: HomePage());
   }
 }

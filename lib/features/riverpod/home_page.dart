@@ -9,7 +9,20 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container();
+    return Scaffold(
+      body: Column(
+        children: [
+          Semantics(
+            child: Text('テスト'),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref.read(counterProvider.notifier);
+        },
+      ),
+    );
   }
 }
 
@@ -23,6 +36,14 @@ class Item {
   final String id;
   final String title;
   final int price;
+}
+
+@riverpod
+class Counter extends _$Counter {
+  @override
+  int build() {
+    return 1;
+  }
 }
 
 class CartListPage extends ConsumerWidget {
