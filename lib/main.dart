@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_voyage/features/sample/home_page.dart';
+import 'package:flutter_voyage/features/hooks/use_reducer_sample.dart';
 
 void main() async {
   // await Supabase.initialize(
@@ -24,10 +24,11 @@ class MyApp extends StatelessWidget {
         ),
         builder: (context, child) {
           return MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: TextScaler.linear(1)),
             child: child!,
           );
         },
-        home: HomePage());
+        home: UseReducerSample());
   }
 }
